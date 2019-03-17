@@ -1,6 +1,5 @@
 package com.jbosak.csa.bank.server
 
-import org.omg.CORBA.Object
 import java.sql.Timestamp
 import java.util.*
 
@@ -14,11 +13,7 @@ var users = arrayListOf<User>().also {
 
 
 class SessionManager : BankServer{
-//    override fun doSomething(user:Object): String {
-//        print(user)
-//        return  ""
-////        return User("ds","fdsds")
-//    }
+
 
     var sessions = arrayListOf<Session>()
     val methods: HashMap<String, Boolean> = HashMap()
@@ -34,7 +29,7 @@ class SessionManager : BankServer{
 
     override fun logout(username: String, password: String): Boolean {
         if (isAuthenticated(username)){
-            val session = sessions.filter { it.user.username == username }[0]
+            val session = sessions.filter { it.user?.username == username }[0]
             sessions.remove(session)
             return true
         }
@@ -86,17 +81,16 @@ class SessionManager : BankServer{
     }
 
 
-    override fun login(username: String, password: String): Boolean {
+    override fun login(username: String, password: String): Session? {
         val user = User(username,password)
         for (it in users) {
             if(it.username == user.username && it.password == user.password){
                 val session = Session(it)
                 sessions.add(session)
-                print(session.expirationTime)
-                return true
+                return session
             }
         }
-        return false
+        return null
     }
 
     override fun isAuthenticated(username: String): Boolean {
@@ -104,7 +98,7 @@ class SessionManager : BankServer{
         if (userExist(username).not()) return false
         var expirationDate:Timestamp? = null
         sessions.forEach {
-            if (it.user.username == username){
+            if (it.user?.username == username){
                 expirationDate = it.expirationTime
             }
         }

@@ -1,3 +1,5 @@
+package com.jbosak.csa.bank.server;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
