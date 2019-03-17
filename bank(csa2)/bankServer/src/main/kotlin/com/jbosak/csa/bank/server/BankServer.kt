@@ -1,7 +1,5 @@
 package com.jbosak.csa.bank.server
 
-import org.omg.CORBA.Object
-
 interface BankServer {
 
     fun logout(username: String, password: String): Boolean
@@ -16,9 +14,9 @@ interface BankServer {
 
     fun accountBalance(username: String, password: String): String?
 
-    fun login(username: String, password: String): Boolean
+    fun login(username: String, password: String): Session?
 
     fun isAuthenticated(username: String): Boolean
 
-//    fun doSomething(user: Object): String
+//    fun doSomething(): Session
 }
