@@ -1,8 +1,5 @@
 import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.client.XmlRpcClientConfig;
-import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Scanner;
 
@@ -21,12 +18,13 @@ public class Main {
             String input = scanner.next();
             while (!input.equals("exit")){
 
-                if (input.equals("login"))  client.asyncLogin(scanner,callback);
-                if (input.equals("register"))   client.asyncRegister(scanner, callback);
-                if (input.equals("accountBalance")) client.asyncAccountBalance(callback);
-                if (input.equals("transfer"))   client.asyncTransfer(scanner, callback);
-                if (input.equals("logout"))     client.asyncLogout(callback);
+                if (input.equals("login"))  client.login(scanner,callback);
+                if (input.equals("register"))   client.register(scanner, callback);
+                if (input.equals("accountBalance")) client.accountBalance(callback);
+                if (input.equals("transfer"))   client.transfer(scanner, callback);
+                if (input.equals("logout"))     client.logout(callback);
                 if (input.equals("another")) client.anotherMethod(scanner);
+                if (input.equals("options")) client.options(callback);
 //                client.options(callback);
                 input = scanner.next();
             }

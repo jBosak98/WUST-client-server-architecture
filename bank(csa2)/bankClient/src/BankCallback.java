@@ -1,5 +1,5 @@
 
-import com.jbosak.csa.bank.server.Session;
+import com.jbosak.csa.bank.server.User;
 import org.apache.xmlrpc.XmlRpcRequest;
 import org.apache.xmlrpc.client.AsyncCallback;
 
@@ -23,14 +23,19 @@ public class BankCallback implements AsyncCallback {
         if (xmlRpcRequest.getMethodName().contains("register")) System.out.println("Account successfully created: " + o);
         else if (xmlRpcRequest.getMethodName().contains("transfer")) System.out.println("transfer successfully finished: " + o);
         else if (xmlRpcRequest.getMethodName().contains("accountBalance")) System.out.println("Amount of money: " + o);
-        else if (xmlRpcRequest.getMethodName().contains("login")) client.handleLoggedIn((Session) o);
+        else if (xmlRpcRequest.getMethodName().contains("login")) client.handleLoggedIn((User) o);
         else if (xmlRpcRequest.getMethodName().contains("options")) System.out.println(o);
-//        else {
-//            System.out.println("Not handled method: " + o);
+        else if(xmlRpcRequest.getMethodName().contains("logout")) client.handleLogout((Boolean) o);
+        else {
+            System.out.println("Not handled method: " + o);
 
-//            client.options(this);
+//            try {
+//                client.options(this);
+//            } catch (XmlRpcException e) {
+//                e.printStackTrace();
+//            }
 
-//        }
+        }
     }
 
     @Override
