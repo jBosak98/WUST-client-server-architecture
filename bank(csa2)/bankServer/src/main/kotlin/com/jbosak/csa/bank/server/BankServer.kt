@@ -2,9 +2,9 @@ package com.jbosak.csa.bank.server
 
 interface BankServer {
 
-    fun logout(username: String, password: String): Boolean
+    fun logout(): Boolean
 
-    fun transfer(username: String, password: String, destinationUsername: String, amountOfMoney: Int): Boolean
+    fun transfer(username: String, destinationUsername: String, amountOfMoney: Int): Boolean
 
     fun options(): String
 
@@ -12,11 +12,11 @@ interface BankServer {
 
     fun register(username: String, password: String, money: Int): Boolean
 
-    fun accountBalance(username: String, password: String): String?
+    fun accountBalance(username: String): String?
 
-    fun login(username: String, password: String): Session?
+    fun login(username: String, password: String): User?
 
-    fun isAuthenticated(username: String): Boolean
+//    fun isAuthenticated(username: String): Boolean
 
 //    fun doSomething(): Session
 }

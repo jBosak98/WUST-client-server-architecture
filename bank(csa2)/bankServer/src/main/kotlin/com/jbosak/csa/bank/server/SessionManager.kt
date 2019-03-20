@@ -1,6 +1,5 @@
 package com.jbosak.csa.bank.server
 
-import java.sql.Timestamp
 import java.util.*
 
 var users = arrayListOf<User>().also {
@@ -11,41 +10,36 @@ var users = arrayListOf<User>().also {
     it.add(User("davis", "d", 765))
 }
 
+val methods: HashMap<String, Boolean> = hashMapOf<String, Boolean>().also{
+    it["Bank.options"] = false
+    it["Bank.register"] = false
+    it["Bank.login"] = false
+    it["Bank.accountBalance"] = true
+    it["Bank.transfer"] = true
+    it["Bank.logout"] = true
+}
 
-class SessionManager : BankServer{
+
+class SessionManager() : BankServer{
+    override fun transfer(username: String, destinationUsername: String, amountOfMoney: Int): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
     var sessions = arrayListOf<Session>()
-    val methods: HashMap<String, Boolean> = HashMap()
-    init {
-        methods["options"] = false
-        methods["register"] = false
-        methods["login"] = false
-        methods["accountBalance"] = true
-        methods["transfer"] = true
-        methods["logout"] = true
-    }
 
+    override fun logout(): Boolean = true
 
-    override fun logout(username: String, password: String): Boolean {
-        if (isAuthenticated(username)){
-            val session = sessions.filter { it.user?.username == username }[0]
-            sessions.remove(session)
-            return true
-        }
-        return true
-    }
-
-    override fun transfer(username: String, password: String, destinationUsername: String, amountOfMoney: Int): Boolean{
-        if (isAuthenticated(username) && userExist(destinationUsername)){
-            val user = users.filter { username == it.username }[0]
-            val destinationUser = users.filter { destinationUsername == it.username }[0]
-            user.money-= amountOfMoney
-            destinationUser.money += amountOfMoney
-            return true
-        }
-        return false
-    }
+//    override fun transfer(username: String, password: String, destinationUsername: String, amountOfMoney: Int): Boolean{
+//        if (userExist(destinationUsername)){
+//            val user = users.filter { username == it.username }[0]
+//            val destinationUser = users.filter { destinationUsername == it.username }[0]
+//            user.money-= amountOfMoney
+//            destinationUser.money += amountOfMoney
+//            return true
+//        }
+//        return false
+//    }
 
     override fun options(): String {
         return methods.filter{ !it.value }.map { it.key }.toString()
@@ -69,47 +63,61 @@ class SessionManager : BankServer{
         return true
     }
 
-    override fun accountBalance(username: String, password: String): String? {
-        if (isAuthenticated(username)){
+    override fun accountBalance(username: String): String? {
+        println("ACCOUNT BALNCE")
+
             val user = users.filter { it.username == username }[0]
             println(user.toString())
             println(user.money)
             return user.money.toString()
-        }
-        return "not logged in"
+//        }
+//        return "not logged in"
 
     }
 
 
-    override fun login(username: String, password: String): Session? {
-        val user = User(username,password)
-        for (it in users) {
-            if(it.username == user.username && it.password == user.password){
+    override fun login(username: String, password: String): User? {
+        if(isAuthenticated(username, password, "")){
+            val user = User(username,password)
+            for (it in users) {
+//            if(it.username == user.username && it.password == user.password){
                 val session = Session(it)
                 sessions.add(session)
-                return session
+//                return session
             }
+            return user
         }
         return null
     }
 
-    override fun isAuthenticated(username: String): Boolean {
-        print(username)
-        if (userExist(username).not()) return false
-        var expirationDate:Timestamp? = null
-        sessions.forEach {
-            if (it.user?.username == username){
-                expirationDate = it.expirationTime
-            }
-        }
-
-        if (expirationDate == null) return false
-        return expirationDate!! > Timestamp(Date().time)
-    }
+//    override fun isAuthenticated(username: String): Boolean {
+//        print(username)
+//        if (userExist(username).not()) return false
+//        var expirationDate:Timestamp? = null
+//        sessions.forEach {
+//            if (it.user?.username == username){
+//                expirationDate = it.expirationTime
+//            }
+//        }
+//
+//        if (expirationDate == null) return false
+//        return expirationDate!! > Timestamp(Date().time)
+//    }
 
 
     fun userExist(username: String): Boolean {
         users.forEach { if(it.username == username) return true }
+        return false
+    }
+    private fun isAuthenticated(basicUserName: String?, basicPassword: String?, methodName: String): Boolean {
+        if (methods.containsKey(methodName) && !methods[methodName]!!){
+            return true
+        }
+        users.forEach {
+            if (it.password == basicPassword && it.username == basicUserName){
+                return  true
+            }
+        }
         return false
     }
 
