@@ -1,4 +1,4 @@
-package com.jbosak.csa.bank.server
+package com.jbosak.csa.bank.server.model
 
 import java.io.Serializable
 import java.sql.Timestamp
