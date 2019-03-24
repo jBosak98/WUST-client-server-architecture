@@ -1,5 +1,6 @@
-package com.jbosak.csa.bank.server
+package com.jbosak.csa.bank.server.model
 
+import com.jbosak.csa.bank.server.model.User
 import java.io.Serializable
 import java.sql.Timestamp
 import java.util.*
