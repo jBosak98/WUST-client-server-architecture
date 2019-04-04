@@ -1,21 +1,25 @@
 import java.lang.Exception
 import java.rmi.registry.LocateRegistry
 import java.rmi.registry.Registry
+import kotlin.concurrent.fixedRateTimer
 
 
 fun main() {
     println("xd")
-    val reg: Registry
-    try{
-        reg = LocateRegistry.createRegistry(1099)
-        java.rmi.Naming.rebind("//localhost/fifo", FifoImpl())
-        println("server registered")
-        println("Ctrl + C to stop")
-    }catch (e: Exception){
-        println("error!!")
-        e.printStackTrace()
-        return
-    }
+    val x = FifoImpl()
+    val size = 3
+    x.run(kotlin.arrayOfNulls(size), arrayOf(Page(1,2,3)))
+//    val reg: Registry
+//    try{
+//        reg = LocateRegistry.createRegistry(1099)
+//        java.rmi.Naming.rebind("//localhost/fifo", FifoImpl())
+//        println("server registered")
+//        println("Ctrl + C to stop")
+//    }catch (e: Exception){
+//        println("error!!")
+//        e.printStackTrace()
+//        return
+//    }
 }
 
 //Page replacement algorithms
