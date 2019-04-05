@@ -1,3 +1,4 @@
+import model.Page
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -14,7 +15,7 @@ class FifoTest {
             it.add(Page(4))
             it.add(Page(5))
         }
-        var (numberOfFaults, memory) = fifoAlgorithm.run(size, pages = pages)
+        var numberOfFaults = fifoAlgorithm.run(size, pages = pages)
         assertEquals(5, numberOfFaults)
 
         pages = arrayListOf<Page>().also {
@@ -31,7 +32,7 @@ class FifoTest {
             it.add(Page(0))
             it.add(Page(4))
         }
-        var (numberOfFaults2,memory2)  = fifoAlgorithm.run(3, pages)
+        var numberOfFaults2 = fifoAlgorithm.run(3, pages)
         assertEquals(9, numberOfFaults2)
         pages = arrayListOf<Page>().also {
             it.add(Page(3))
@@ -47,7 +48,7 @@ class FifoTest {
             it.add(Page(0))
             it.add(Page(4))
         }
-        var (numberOfFaults3,memory3)  = fifoAlgorithm.run(4, pages)
+        var numberOfFaults3  = fifoAlgorithm.run(4, pages)
         assertEquals(10, numberOfFaults3)
 
     }
@@ -66,7 +67,7 @@ class FifoTest {
 
         memory = ArrayList(3)
         assertFalse(fifoAlgorithm.isInMemory(p1, memory))
-        memory = arrayListOf(Page(1,1))
+        memory = arrayListOf(Page(1, 1))
 
         assertTrue(fifoAlgorithm.isInMemory(Page(1), memory))
         assertFalse(fifoAlgorithm.isInMemory(Page(0), memory))
