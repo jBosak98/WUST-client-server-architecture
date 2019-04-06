@@ -5,6 +5,26 @@ import org.junit.jupiter.api.Test
 class FifoTest {
 
     @Test
+    fun testOneDataMultipleRequestFifo(){
+        val fifoAlgorithm = FifoImpl()
+        val size = 20
+        var pages = arrayListOf<Page>().also{
+            it.add(Page(2))
+            it.add(Page(2))
+            it.add(Page(2))
+            it.add(Page(2))
+            it.add(Page(2))
+            it.add(Page(2))
+            it.add(Page(2))
+            it.add(Page(2))
+            it.add(Page(2))
+            it.add(Page(2))
+        }
+        var numberOfFaults = fifoAlgorithm.run(size, pages = pages)
+        assertEquals(1, numberOfFaults)
+    }
+
+    @Test
     fun testFifo() {
         val fifoAlgorithm = FifoImpl()
         val size = 3
