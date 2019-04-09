@@ -1,7 +1,4 @@
-import algorithm.Alru
-import algorithm.Fifo
-import algorithm.Lru
-import algorithm.Opt
+import algorithm.*
 import javafx.collections.FXCollections
 import model.Page
 import tornadofx.Controller
@@ -13,6 +10,7 @@ class PageController: Controller(){
     var opt: Opt? = null
     var lru : Lru? = null
     var alru: Alru? = null
+    var rand: Rand? = null
     var pages = FXCollections.observableArrayList<Page>()
 
 
@@ -22,6 +20,7 @@ class PageController: Controller(){
         opt = reg.lookup("//localhost/opt") as Opt
         lru = reg.lookup("//localhost/lru") as Lru
         alru = reg.lookup("//localhost/alru") as Alru
+        rand = reg.lookup("//localhost/rand") as Rand
 
 
     }
@@ -40,11 +39,13 @@ class PageController: Controller(){
             val optFaults = opt?.run(sizeOfMemory,  fifoPages)
             val lruFaults = lru?.run(sizeOfMemory, fifoPages)
             val alruFaults = alru?.run(sizeOfMemory, fifoPages)
+            val randFaults = rand?.run(sizeOfMemory, fifoPages)
 
             println("FIFO faults: $fifoFaults")
             println("OPT faults: $optFaults")
             println("LRU faults: $lruFaults")
             println("ALRU faults: $alruFaults")
+            println("RAND faults: $randFaults")
 
         }catch (e: Exception){
             println("Remote call error")

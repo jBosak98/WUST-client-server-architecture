@@ -1,7 +1,4 @@
-import algorithm.AlruImpl
-import algorithm.FifoImpl
-import algorithm.LruImpl
-import algorithm.OptImpl
+import algorithm.*
 import java.rmi.registry.LocateRegistry
 import java.rmi.registry.Registry
 
@@ -14,6 +11,7 @@ fun main() {
         reg.rebind("//localhost/opt", OptImpl())
         reg.rebind("//localhost/lru", LruImpl())
         reg.rebind("//localhost/alru", AlruImpl())
+        reg.rebind("//localhost/rand", RandImpl())
         println("server registered")
         println("Ctrl + C to stop")
     }catch (e: Exception){
