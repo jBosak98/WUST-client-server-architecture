@@ -1,5 +1,6 @@
 import algorithm.FifoImpl
 import model.Page
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -72,6 +73,38 @@ class FifoTest {
         var numberOfFaults3  = fifoAlgorithm.run(4, pages)
         assertEquals(10, numberOfFaults3)
 
+        pages = arrayListOf<Page>().also{
+            it.add(Page(1))
+            it.add(Page(2))
+            it.add(Page(3))
+            it.add(Page(4))
+            it.add(Page(1))
+            it.add(Page(2))
+            it.add(Page(5))
+            it.add(Page(1))
+            it.add(Page(2))
+            it.add(Page(3))
+            it.add(Page(4))
+            it.add(Page(5))
+        }
+        numberOfFaults = fifoAlgorithm.run(3, pages = pages)
+        Assertions.assertEquals(9, numberOfFaults)
+        pages = arrayListOf<Page>().also{
+            it.add(Page(1))
+            it.add(Page(2))
+            it.add(Page(3))
+            it.add(Page(4))
+            it.add(Page(1))
+            it.add(Page(2))
+            it.add(Page(5))
+            it.add(Page(1))
+            it.add(Page(2))
+            it.add(Page(3))
+            it.add(Page(4))
+            it.add(Page(5))
+        }
+        numberOfFaults = fifoAlgorithm.run(4, pages = pages)
+        Assertions.assertEquals(10, numberOfFaults)
     }
 
     @Test
