@@ -3,7 +3,7 @@ package algorithm
 import RemotePagingAlgorithm
 import model.Page
 
-class LruImpl: Opt, RemotePagingAlgorithm() {
+class LruImpl: Lru, RemotePagingAlgorithm() {
     override fun run(sizeOfMemory: Int, pages: ArrayList<Page>): Int {
         var faultCounter = 0
         var memory: ArrayList<Page> = arrayListOf()
