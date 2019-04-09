@@ -1,3 +1,4 @@
+import algorithm.AlruImpl
 import algorithm.FifoImpl
 import algorithm.LruImpl
 import algorithm.OptImpl
@@ -12,6 +13,7 @@ fun main() {
         reg.rebind("//localhost/fifo", FifoImpl())
         reg.rebind("//localhost/opt", OptImpl())
         reg.rebind("//localhost/lru", LruImpl())
+        reg.rebind("//localhost/alru", AlruImpl())
         println("server registered")
         println("Ctrl + C to stop")
     }catch (e: Exception){
