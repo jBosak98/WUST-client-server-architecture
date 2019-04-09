@@ -10,8 +10,8 @@ class PageController: Controller(){
 
 
     init {
-        val reg: Registry = LocateRegistry.createRegistry(1096)
-        fifo =  java.rmi.Naming.lookup("//localhost/fifo") as Fifo
+        val reg: Registry = LocateRegistry.getRegistry(1097)
+        fifo =  reg.lookup("//localhost/fifo") as Fifo
 
     }
     fun save(inputValue: Int){
