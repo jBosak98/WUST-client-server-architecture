@@ -6,7 +6,7 @@ fun main() {
     val reg: Registry
     try{
         reg = LocateRegistry.createRegistry(1097)
-        java.rmi.Naming.rebind("//localhost/fifo", FifoImpl())
+        reg.rebind("//localhost/fifo", FifoImpl())
         println("server registered")
         println("Ctrl + C to stop")
     }catch (e: Exception){
