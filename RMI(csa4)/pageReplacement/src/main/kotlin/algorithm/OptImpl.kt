@@ -1,3 +1,6 @@
+package algorithm
+
+import RemotePagingAlgorithm
 import model.Page
 
 class OptImpl: Opt, RemotePagingAlgorithm() {
@@ -15,9 +18,11 @@ class OptImpl: Opt, RemotePagingAlgorithm() {
                     faultCounter++
                 }else {
                     faultCounter++
-                    memory[getFarthest(pages,memory)] = pages[pageCounter]
+                    val futurePages = ArrayList<Page>().also {
+                        pages.filterIndexed { index, _ -> index > pageCounter }.toCollection(it)
+                    }
+                    memory[getFarthest(futurePages, memory)] = pages[pageCounter]
                 }
-
             }
             pageCounter++
             memory.forEach { it.timeInMemory++ }

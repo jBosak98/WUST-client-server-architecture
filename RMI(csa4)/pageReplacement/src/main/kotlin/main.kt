@@ -1,3 +1,5 @@
+import algorithm.FifoImpl
+import algorithm.OptImpl
 import java.rmi.registry.LocateRegistry
 import java.rmi.registry.Registry
 
@@ -7,6 +9,7 @@ fun main() {
     try{
         reg = LocateRegistry.createRegistry(1097)
         reg.rebind("//localhost/fifo", FifoImpl())
+        reg.rebind("//localhost/opt", OptImpl())
         println("server registered")
         println("Ctrl + C to stop")
     }catch (e: Exception){

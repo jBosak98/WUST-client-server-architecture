@@ -1,3 +1,6 @@
+package algorithm
+
+import RemotePagingAlgorithm
 import model.Page
 
 class FifoImpl : RemotePagingAlgorithm(), Fifo {
