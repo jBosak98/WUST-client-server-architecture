@@ -1,7 +1,6 @@
 import model.Page
-import java.rmi.server.UnicastRemoteObject
 
-class FifoImpl : UnicastRemoteObject(), Fifo {
+class FifoImpl : RemotePagingAlgorithm(), Fifo {
     override fun run(sizeOfMemory: Int,  pages: ArrayList<Page>): Int{
         var faultCounter = 0
         var memory: ArrayList<Page> = arrayListOf()
@@ -28,15 +27,6 @@ class FifoImpl : UnicastRemoteObject(), Fifo {
             memory.forEach { it.timeInMemory++ }
         }
         return faultCounter
-    }
-
-    fun isInMemory(page: Page, memory: ArrayList<Page>): Boolean {
-        for (m in memory){
-            m.let {
-                if (it.data == page.data) return true
-            }
-        }
-        return false
     }
 
 }
