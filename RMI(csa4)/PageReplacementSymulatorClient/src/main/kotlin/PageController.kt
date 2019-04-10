@@ -1,7 +1,10 @@
 import algorithm.*
 import javafx.collections.FXCollections
+import javafx.scene.chart.BarChart
 import model.Page
 import tornadofx.Controller
+import tornadofx.MultiSeries
+import tornadofx.observable
 import java.rmi.registry.LocateRegistry
 import java.rmi.registry.Registry
 
@@ -12,6 +15,7 @@ class PageController: Controller(){
     var alru: Alru? = null
     var rand: Rand? = null
     var pages = FXCollections.observableArrayList<Page>()
+    var results = FXCollections.observableArrayList<Int>()
 
 
     init {
@@ -35,11 +39,25 @@ class PageController: Controller(){
             val fifoPages: ArrayList<Page> = arrayListOf()
             pages.forEach { fifoPages.add(Page(it.data)) }
 
-            val fifoFaults = fifo?.run(sizeOfMemory,  fifoPages)
-            val optFaults = opt?.run(sizeOfMemory,  fifoPages)
-            val lruFaults = lru?.run(sizeOfMemory, fifoPages)
-            val alruFaults = alru?.run(sizeOfMemory, fifoPages)
-            val randFaults = rand?.run(sizeOfMemory, fifoPages)
+            var fifoFaults = 0
+            var optFaults = 0
+            var lruFaults = 0
+            var alruFaults = 0
+            var randFaults = 0
+            fifo?.run(sizeOfMemory,  fifoPages)?.let { fifoFaults = it }
+            opt?.run(sizeOfMemory,  fifoPages)?.let { optFaults = it }
+            lru?.run(sizeOfMemory, fifoPages)?.let { lruFaults = it }
+            alru?.run(sizeOfMemory, fifoPages)?.let { alruFaults = it }
+            rand?.run(sizeOfMemory, fifoPages)?.let { randFaults = it }
+
+            results = listOf(
+                fifoFaults,
+                optFaults,
+                lruFaults,
+                alruFaults,
+                randFaults
+
+            ).observable()
 
             println("FIFO faults: $fifoFaults")
             println("OPT faults: $optFaults")
