@@ -4,6 +4,7 @@ import PageController
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Pos
 import tornadofx.*
+import kotlin.random.Random
 
 
 class AddPageView : View() {
@@ -18,14 +19,23 @@ class AddPageView : View() {
         add(buttons())
     }
 
-    private fun buttons() = hbox(spacing = 20, alignment = Pos.CENTER) {
+    private fun buttons() = vbox (spacing = 20, alignment = Pos.CENTER) {
         button("Add") {
             action { controller.save(data.value) }
         }
-
-        button("Start") {
-            action { controller.start(sizeOfMemory.value) }
+        hbox (spacing = 20, alignment = Pos.CENTER){
+            val random = Random(543645645645534)
+            button("add Random") {
+                action { controller.save(random.nextInt(0,5)) }
+            }
+            button("Start") {
+                action {
+                    controller.start(sizeOfMemory.value)
+                    replaceWith(ChartView())
+                }
+            }
         }
+
     }
 
     private fun pageField() = form {
