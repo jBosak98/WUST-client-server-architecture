@@ -14,6 +14,8 @@ class TableView : View(){
         isEditable = true
         columnResizePolicy = SmartResize.POLICY
         column("data", Page::data).makeEditable()
+        this.setSortPolicy { false }
+
 
     }
 }
